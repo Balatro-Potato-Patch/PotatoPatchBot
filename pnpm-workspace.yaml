@@ -1,0 +1,4 @@
+allowBuilds:
+  better-sqlite3: true
+overrides:
+  "better-sqlite3": "12.11.1"

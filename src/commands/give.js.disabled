@@ -1,0 +1,47 @@
+import { Constants } from '@projectdysnomia/dysnomia';
+import { optionsToObj } from '../helpers/commands.js';
+import { db } from '../helpers/data.js';
+
+/** @type {import('@projectdysnomia/dysnomia').ChatInputApplicationCommandStructure} */
+const metadata = {
+    name: 'give',
+    description: 'Give (or take) points.',
+    type: Constants.ApplicationCommandTypes.CHAT_INPUT,
+    options: [
+        {
+            name: 'user',
+            description: 'The user to give points to.',
+            type: Constants.ApplicationCommandOptionTypes.USER,
+            required: true,
+        },
+        {
+            name: 'amount',
+            description: 'The amount of points to give.',
+            type: Constants.ApplicationCommandOptionTypes.INTEGER,
+            required: true,
+        },
+    ],
+    defaultMemberPermissions: "0",
+    dmPermission: false,
+};
+
+/**
+ * @param {import('@projectdysnomia/dysnomia').CommandInteraction} interaction
+ * @param {import('@projectdysnomia/dysnomia').Client} client
+ */
+const execute = async (interaction, client) => {
+    const { user, amount } = optionsToObj(interaction.data.options);
+    let { points } = db.ensure(user, { points: 0 });
+    if (isNaN(points)) {
+        console.error(`points is NaN for ${user}. Setting to 0.`);
+        points = 0;
+    }
+    const newPoints = points + amount;
+    db.set(user, newPoints, 'points');
+    await interaction.createMessage({ content: `Gave ${amount} points to <@${user}>. They now have ${newPoints} points.`, flags: Constants.MessageFlags.EPHEMERAL });
+};
+
+export {
+    metadata,
+    execute,
+}

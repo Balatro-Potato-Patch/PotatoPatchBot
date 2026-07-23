@@ -1,0 +1,34 @@
+import { Constants } from '@projectdysnomia/dysnomia';
+import { optionsToObj } from '../helpers/commands.js';
+import { db } from '../helpers/data.js';
+
+/** @type {import('@projectdysnomia/dysnomia').ChatInputApplicationCommandStructure} */
+const metadata = {
+    name: 'points',
+    description: 'View points.',
+    type: Constants.ApplicationCommandTypes.CHAT_INPUT,
+    options: [
+        {
+            name: 'user',
+            description: 'The user to view the points of.',
+            type: Constants.ApplicationCommandOptionTypes.USER,
+            required: true,
+        },
+    ],
+    dmPermission: false,
+};
+
+/**
+ * @param {import('@projectdysnomia/dysnomia').CommandInteraction} interaction
+ * @param {import('@projectdysnomia/dysnomia').Client} client
+ */
+const execute = async (interaction, client) => {
+    const { user } = optionsToObj(interaction.data.options);
+    const { points } = db.ensure(user, { points: 0 });
+    await interaction.createMessage(`User <@${user}> has ${points} points.`);
+};
+
+export {
+    metadata,
+    execute,
+}

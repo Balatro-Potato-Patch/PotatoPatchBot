@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@projectdysnomia/dysnomia": "github:projectdysnomia/dysnomia#dev",
+    "enmap": "^5.9.10"
+  },
+  "type": "module",
+  "main": "src/index.js"
+}
