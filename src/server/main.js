@@ -8,7 +8,7 @@ import { fetchGH } from "../helpers/gh.js";
 
 let CLIENT_ID = process.env.GH_CLIENT_ID;
 let CLIENT_SECRET = process.env.GH_CLIENT_SECRET;
-const CALLBACK_URL = 'https://tmp.shorty.systems/callback';
+let CALLBACK_URL = process.env.CALLBACK_URL || 'http://localhost:3000/callback';
 const PORT = 3000;
 
 const stateStore = new Map(); 
@@ -113,6 +113,7 @@ function listen() {
     // These are now guranteed to be loaded
     CLIENT_ID = process.env.GH_CLIENT_ID;
     CLIENT_SECRET = process.env.GH_CLIENT_SECRET;
+    CALLBACK_URL = process.env.CALLBACK_URL || CALLBACK_URL;
     server.listen(PORT, () => {
         console.log(`Server running at http://localhost:${PORT}/`);
     });
