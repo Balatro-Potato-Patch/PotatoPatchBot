@@ -3,7 +3,9 @@ import { actions, commands, loadCommands } from "./helpers/commands.js";
 import { listen } from "./server/main.js";
 import { loadEnvFile } from 'node:process';
 
-loadEnvFile();
+try {
+    loadEnvFile();
+} catch(e) { console.error("Error loading env file. If everything boots like normal you can probably ignore this") }
 ["TOKEN","GH_CLIENT_ID","GH_CLIENT_SECRET","GH_PAT","GH_ORG_NAME"].forEach(v => {
     if (!process.env[v]) throw new Error(`Missing required ENV variable "${v}"`);
 });

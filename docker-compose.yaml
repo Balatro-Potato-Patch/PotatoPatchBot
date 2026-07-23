@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  bot:
+    image: ghcr.io/balatro-potato-patch/potatopatchbot:latest
+    container_name: ppb
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    stop_grace_period: 10s
+    ports:
+      - 3000:3000

@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node ."
+  },
   "dependencies": {
     "@projectdysnomia/dysnomia": "github:projectdysnomia/dysnomia#dev",
     "enmap": "^5.9.10"
