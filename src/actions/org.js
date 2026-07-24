@@ -1,6 +1,6 @@
 import { Constants } from '@projectdysnomia/dysnomia';
 import { udb } from '../helpers/data.js';
-import { checkOrg, inviteUser } from "../helpers/gh.js";
+import { checkOrg, inviteUser, addUserToTeam } from "../helpers/gh.js";
 
 const metadata = {
     name: 'org',
@@ -25,6 +25,9 @@ const execute = async (interaction, client) => {
     }
     if (!status) { // Not invited
         await inviteUser(gh.ghID);
+        // HACK: Fish and Chips
+        if (interaction.member?.roles.includes('1528889855990563026')) // Fish and Chips Participant
+            await addUserToTeam(gh.lastUsername, "fish-and-chips");
     }
     return interaction.createMessage({
         flags: Constants.MessageFlags.EPHEMERAL | Constants.MessageFlags.IS_COMPONENTS_V2,

@@ -126,9 +126,9 @@ client.on('messageCreate', async (message) => {
             } catch (e) { }
 
         }
-        response = response.replace(process.env.TOKEN, 'no');
-        response = response.replace(process.env.GH_CLIENT_SECRET, 'no');
-        response = response.replace(process.env.GH_PAT, 'no');
+        response = response.replaceAll(process.env.TOKEN, 'no');
+        response = response.replaceAll(process.env.GH_CLIENT_SECRET, 'no');
+        response = response.replaceAll(process.env.GH_PAT, 'no');
         const length = `\`\`\`${response}\`\`\``.length;
         embed.title = e ? '**Error**' : '**Success**';
         embed.color = e ? 0xe74c3c : 0x2ecc71;

@@ -33,8 +33,15 @@ function inviteUser(id) {
     });
 }
 
+function addUserToTeam(username, team) {
+    return fetchGH(`/orgs/${process.env.GH_ORG_NAME}/teams/${team}/memberships/${username}`, {
+        method: "PUT",
+    });
+}
+
 export {
     fetchGH,
     checkOrg,
     inviteUser,
+    addUserToTeam,
 }
